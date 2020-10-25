@@ -21,7 +21,7 @@ Hint! Use .includes().
 Step 4 [X]
 Create a post method that will add a flower that is not in the array into it and will respond, "We already have that flower, no need to add it" if it already exists in the array.
 
-Step 5 []
+Step 5 [X]
 Use Postman to check and see that these are returning the correct messages based on the HTTP verb.
 */
 
@@ -30,24 +30,29 @@ let flowers = ["Orchid", "Iris", "Hydrangea", "Amaryllis", "Dahlia", "Daffodil",
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let flowerReq = req.body;
-  res.render('index', { title: 'My Garden' });
+  //in GET, we use the request query to pass information
+  //in Postman testing, this takes the form of "?flower=daisy" in the url or
+  //a key:value pair in the params section
+  let flowerReq = req.query.flower;
+  if(flowers.includes(flowerReq)){
+    res.send(`Yes, we have ${flowerReq} in our garden`);
+  }else{
+    res.send(`Nope, we do not have ${flowerReq} in our garden, but maybe we should plant it!`);
+  }
 });
 
-/* GET flower list - every time you need a different path in the url, you'll do it like this */
-router.get('/flowerList', function(req, res, next) {
-  res.render('flowerList', {title: 'Flower List', flowers});
-});
 
+
+//in Postman testing, without a form, you must simulate a form 
+//by formatting a raw JSON object for it to show up
 router.post('/', function(req, res, next) {
+  //in POST, we use the body of the request to pass information
   let flowerReq = req.body;
   if(flowers.includes(flowerReq.flower)){
-    // res.send(`Yes, we have ${flowerReq.flower} in our garden`);
-    res.render('flowerPresent', {flower: flowerReq.flower} );
+    res.send(`We already have ${flowerReq.flower}, no need to add it`)
   }else{
-    // res.send(`Nope, we do not have ${flowerReq.flower} in our garden, but maybe we should plant it!`);
     flowers.push(flowerReq.flower);
-    res.render('flowerList', {title: 'Flower List', flowers});
+    res.send(flowers);
   }
 });
 
