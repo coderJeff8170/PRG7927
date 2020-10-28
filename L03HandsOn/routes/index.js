@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var storyParts = require('../models/storyLine');
 
 /* 
 For this project, you will be displaying a story using three views. Each view will be named beginning.hbs, middle.hbs, and end.hbs and will be bound to the three URLs: /beginning, /middle, and /end.
@@ -45,5 +46,17 @@ Each of the Handlebar views should include an HTML tag that links to the other p
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+router.get('/beginning', function(req, res, next) {
+    res.render('beginning', { title: 'Express' });
+  });
+
+router.get('/middle', function(req, res, next) {
+res.render('middle', { title: 'Express' });
+});
+
+router.get('/end', function(req, res, next) {
+    res.render('end', { title: 'Express' });
+    });
 
 module.exports = router;
