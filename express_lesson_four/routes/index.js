@@ -17,15 +17,15 @@ connection.connect(function(err){
   console.log('you are now connected!')
 })
 // use the backticks!
-const query = `SELECT * from actor LIMIT 10`;
+// const query = `SELECT * from actor LIMIT 10`;
 
-connection.query(query, (err, results) => {
-  if(err) {
-    console.err(err.message);
-    return;
-  }
-  console.log(results);
-})
+// connection.query(query, (err, results) => {
+//   if(err) {
+//     console.err(err.message);
+//     return;
+//   }
+//   console.log(results);
+// })
 
 /* GET Actor. */
 router.get('/actor/:id', function(req, res, next) {
