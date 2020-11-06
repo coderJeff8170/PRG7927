@@ -20,10 +20,4 @@ FLUSH PRIVILEGES;
 
 
 
-password for work version of MySQL is T+w/yourw3f#
-work is now Password1!
-
-TODO: ^^ make this the same at home!
-
-home
-changed to Tornado+
+password is now Password1!
