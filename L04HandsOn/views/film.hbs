@@ -1,0 +1,8 @@
+<h1>Bare Bones IMDB</h1>
+<hr>
+<h3>Please Click a movie name to see the details:</h3>
+<ul>
+    {{#each film}}
+    <li><a href="/film/{{film_id}}"">{{title}}</a></li>
+    {{/each}}
+</ul>
