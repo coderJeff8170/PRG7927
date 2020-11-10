@@ -28,11 +28,6 @@
                     },
                     "field": "last_update",
                     "seqType": "Sequelize.DATE"
-                },
-                "DOB": {
-                    "allowNull": true,
-                    "field": "DOB",
-                    "seqType": "Sequelize.DATEONLY"
                 }
             },
             "indexes": {
@@ -65,5 +60,5 @@
             }
         }
     },
-    "revision": 2
+    "revision": 1
 }
