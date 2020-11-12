@@ -1,13 +1,12 @@
 /* jshint indent: 2 */
 
-const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('actor', {
     actor_id: {
-      autoIncrement: true,
-      type: DataTypes.SMALLINT.UNSIGNED,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     first_name: {
       type: DataTypes.STRING(45),
@@ -20,32 +19,9 @@ module.exports = function(sequelize, DataTypes) {
     last_update: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    DOB: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
-    sequelize,
-    tableName: 'actor',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "actor_id" },
-        ]
-      },
-      {
-        name: "idx_actor_last_name",
-        using: "BTREE",
-        fields: [
-          { name: "last_name" },
-        ]
-      },
-    ]
+    tableName: 'actor'
   });
 };

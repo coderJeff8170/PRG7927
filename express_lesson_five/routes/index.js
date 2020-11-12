@@ -43,7 +43,24 @@ router.get('/actor/:id', function(req, res, next){
     res.render('actor', 
     {
       actor: actor
-    }))
-})
+    }));
+});
+
+router.post('/actor', function(req, res, next){
+  console.log(req.body.first_name);
+  models.actor.findOrCreate({
+    where: {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name
+    }
+  })
+  .spread(function(result, created){
+    if(created){
+      res.redirect('/actors');
+    } else {
+      res.send('This actor already exists');
+    }
+  });
+});
 
 module.exports = router;

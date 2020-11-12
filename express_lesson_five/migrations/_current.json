@@ -4,11 +4,10 @@
             "tableName": "actor",
             "schema": {
                 "actor_id": {
-                    "autoIncrement": true,
                     "allowNull": false,
                     "primaryKey": true,
                     "field": "actor_id",
-                    "seqType": "Sequelize.SMALLINT.UNSIGNED"
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
                 },
                 "first_name": {
                     "allowNull": false,
@@ -35,35 +34,8 @@
                     "seqType": "Sequelize.DATEONLY"
                 }
             },
-            "indexes": {
-                "3296ac9e8cee7eb46d1663780aaf06c10343be57": {
-                    "name": "PRIMARY",
-                    "unique": true,
-                    "using": "BTREE",
-                    "fields": [
-                        {
-                            "name": "actor_id"
-                        }
-                    ],
-                    "options": {
-                        "indexName": "PRIMARY",
-                        "indicesType": "UNIQUE"
-                    }
-                },
-                "ad206333eaa157f2e223ba98692617a3526794b3": {
-                    "name": "idx_actor_last_name",
-                    "using": "BTREE",
-                    "fields": [
-                        {
-                            "name": "last_name"
-                        }
-                    ],
-                    "options": {
-                        "indexName": "idx_actor_last_name"
-                    }
-                }
-            }
+            "indexes": []
         }
     },
-    "revision": 2
+    "revision": 4
 }
