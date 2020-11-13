@@ -8,19 +8,41 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//get mutiple actors/render to a web page
+// router.get('/actors', function(req, res, next){
+//   //order the actors alphabetically
+//   models.actor.findAll({
+//     order: [ 
+//       ['last_name', 'ASC']
+//     ]
+//   }).then(allActors =>
+//     res.render('actors',
+//     { 
+//       actors: allActors  
+//     }
+//     ));
+// });
+
+//provide RESTful information using the /actors route:
 router.get('/actors', function(req, res, next){
+  //order the actors alphabetically
   models.actor.findAll({
     order: [ 
       ['last_name', 'ASC']
     ]
-  }).then(allActors =>
-    res.render('actors',
-    { 
-      actors: allActors  
-    }
-    ));
+  }).then(allActors =>{
+    let mappedActors = allActors.map(actor => ({
+      ActorID: actor.actor_id,
+      ActorName: `${actor.first_name} ${actor.last_name}`
+    }));
+    //as JSON!
+    res.send(JSON.stringify(mappedActors));
+  });
 });
 
+
+
+//individual actor with hard coded id
 router.get('/actor', function(req, res, next){
   models.actor.findOne({
     where: {
@@ -32,7 +54,7 @@ router.get('/actor', function(req, res, next){
       actor: actor
     }));
 });
-
+//actor by id - using parameters
 router.get('/actor/:id', function(req, res, next){
   let actorId = parseInt(req.params.id);
   models.actor.findOne({
@@ -45,7 +67,7 @@ router.get('/actor/:id', function(req, res, next){
       actor: actor
     }));
 });
-
+//used to create a new actor, or say that they already exist
 router.post('/actor', function(req, res, next){
   console.log(req.body.first_name);
   models.actor.findOrCreate({
