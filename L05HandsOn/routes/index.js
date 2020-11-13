@@ -16,16 +16,16 @@ Use the sequelize init command to complete the setup of your project.[X]
 Step 2
 You will be using the sakila database for this hands-on.
 
-Create a new model file for the "category" table using the sequelize-auto command.
-This file should be named category.js and put inside of the models folder
-Change your config.json file to reflect the connection and dialect for the development object
-Add the code to your app.js to sync your models and Sequelize
+Create a new model file for the "category" table using the sequelize-auto command.[X]
+This file should be named category.js and put inside of the models folder[X]
+Change your config.json file to reflect the connection and dialect for the development object[X]
+Add the code to your app.js to sync your models and Sequelize[X]
 Step 3
-Run the necessary command to create an initial migration with the new category model
-Add a new column to your category model called default_price that is a decimal type
+Run the necessary command to create an initial migration with the new category model[X]
+Add a new column to your category model called default_price that is a decimal type[X]
 This column will be used for storing default rental prices for movies within that category
-Use the sequelize-auto-migration command to generate a new migration
-Run the migration
+Use the sequelize-auto-migration command to generate a new migration[X]
+Run the migration[X]
 Write the code to display all category names and their default prices.
 You will need a new hbs file and a get() route
 Write the code to add a new category to the database
