@@ -6,6 +6,7 @@
                 "actor_id": {
                     "allowNull": false,
                     "primaryKey": true,
+                    "autoIncrement": true,
                     "field": "actor_id",
                     "seqType": "Sequelize.INTEGER.UNSIGNED"
                 },
@@ -32,5 +33,5 @@
             "indexes": []
         }
     },
-    "revision": 3
+    "revision": 1
 }

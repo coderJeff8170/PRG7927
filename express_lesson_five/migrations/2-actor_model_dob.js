@@ -10,9 +10,9 @@ var Sequelize = require('sequelize');
  **/
 
 var info = {
-    "revision": 4,
+    "revision": 2,
     "name": "actor_model_dob",
-    "created": "2020-11-12T02:23:54.460Z",
+    "created": "2020-11-13T15:42:09.819Z",
     "comment": ""
 };
 

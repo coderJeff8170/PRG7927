@@ -20,6 +20,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    DOB: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
     }
   }, {
     tableName: 'actor'
