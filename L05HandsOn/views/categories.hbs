@@ -1,1 +1,38 @@
-<h1>{{title}}</h1>
+<h1>Movie Categories</h1>
+
+{{!-- <ul>
+    {{#each category}}
+    <li>
+        <h2>{{name}}</h2>
+        <h4>Default Price: {{default_price}}</h4>
+    </li>
+    {{/each}}
+</ul> --}}
+<table>
+  <tr>
+    <th>Category:</th>
+    <th>Default Price:</th>
+  </tr>
+    {{#each category}}
+  <tr>
+    <td>{{name}}</td>
+    <td>{{default_price}}</td>
+  </tr>
+  {{/each}}
+
+</table>
+<hr>
+<h2>Add a new Category:</h2>
+<form action="/categories" method="POST">
+    <div>
+        <label for="name">Category Name:</label>
+        <input type="text" name="name">
+    </div>
+    <div>
+        <label for="price">Category Name:</label>
+        <input type="text" name="price">
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
