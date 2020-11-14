@@ -12,7 +12,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "initial_migration",
-    "created": "2020-11-13T16:17:31.624Z",
+    "created": "2020-11-14T15:34:21.320Z",
     "comment": ""
 };
 
@@ -36,16 +36,6 @@ var migrationCommands = [{
                 "type": Sequelize.DATE,
                 "field": "last_update",
                 "defaultValue": Sequelize.Literal,
-                "allowNull": false
-            },
-            "createdAt": {
-                "type": Sequelize.DATE,
-                "field": "createdAt",
-                "allowNull": false
-            },
-            "updatedAt": {
-                "type": Sequelize.DATE,
-                "field": "updatedAt",
                 "allowNull": false
             }
         },

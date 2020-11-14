@@ -12,7 +12,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 2,
     "name": "category_model_default_price",
-    "created": "2020-11-13T16:30:18.704Z",
+    "created": "2020-11-14T15:36:14.571Z",
     "comment": ""
 };
 
@@ -22,7 +22,7 @@ var migrationCommands = [{
         "category",
         "default_price",
         {
-            "type": Sequelize.DECIMAL,
+            "type": Sequelize.DECIMAL(10, 2),
             "field": "default_price",
             "defaultValue": 5
         }
