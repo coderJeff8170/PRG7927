@@ -7,6 +7,8 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
+//bring in associations defining many to many table relationship between actors and films
+const associations = require('./rel/associations');
 
 let sequelize;
 if (config.use_env_variable) {
@@ -30,6 +32,9 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+
+//call the associations exported function which will run all models defined in models/index.js
+associations(db);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

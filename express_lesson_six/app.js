@@ -3,9 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+//require db models
+const models = require('./models');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var actorsRouter = require('./routes/actors');
 
 var app = express();
 
@@ -21,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+//params (route, route added through specific router file)
+app.use('/actors', actorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,5 +42,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//sync the models and let us know we're good to go
+models.sequelize.sync().then(function(){
+  console.log('All ready to go!!');
+})
 
 module.exports = app;
