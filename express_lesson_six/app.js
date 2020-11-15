@@ -9,6 +9,7 @@ const models = require('./models');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var actorsRouter = require('./routes/actors');
+var filmsRouter = require('./routes/films');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 //params (route, route added through specific router file)
 app.use('/actors', actorsRouter);
+app.use('/films', filmsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
