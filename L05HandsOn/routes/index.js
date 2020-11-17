@@ -32,10 +32,11 @@ You will need a new hbs file and a get() route[X]
 
 Write the code to add a new category to the database
 Have a field for the category name and the default price[X]
-You will need to add a form to the hbs file and a post() route
+You will need to add a form to the hbs file and a post() route[X]
 
-Write the code to display a category based on its ID
-You will need a new hbs file and a get() route using :id */
+Write the code to display a category based on its ID[X]
+You will need a new hbs file and a get() route using :id [X]
+*/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
