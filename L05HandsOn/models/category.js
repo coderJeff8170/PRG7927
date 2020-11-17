@@ -15,6 +15,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    default_price: {
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: false,
+      defaultValue: 5.00
     }
   }, {
     tableName: 'category'
