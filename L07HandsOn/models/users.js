@@ -26,14 +26,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
+    Username: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     Password: DataTypes.STRING,
     Admin: {
       type: DataTypes.BOOLEAN,
-      default: false
+      defaultValue: false
     },
     Deleted: {
       type: DataTypes.BOOLEAN,
-      default: false
+      defaultValue: false
     }
   }, {
     sequelize,
