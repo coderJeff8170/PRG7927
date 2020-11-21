@@ -16,12 +16,12 @@ The createdAt and updatedAt columns will be created automatically
 Step 3
 Add the routes of the following:
 
-User signup: /users/signup
-User login: /users/login
-Show user profile: /users/profile
-Show a list of users: /users
-Show a specific user: /users/:id
-Delete user: /users/:id
+User signup: /users/signup[X]
+User login: /users/login[X]
+Show user profile: /users/profile[X]
+Show a list of users: /users[X]
+Show a specific user: /users/:id[X]
+Delete user: /users/:id[X]//questions about this one.
 Step 4
 Use passport's local strategy so only the user sees their profile in the /users/profile route and can see other users profiles when they use the /users/:id route.
 

@@ -1,9 +1,10 @@
 <h1>All Users</h1>
 
 <ul>
-    <li>User</li>
-    <li>User</li>
-    <li>User</li>
-    <li>User</li>
-    <li>User</li>
+    {{#each users}}
+    <li>
+        <a href="#">{{Username}}</a>
+        <button></button>
+    </li>
+    {{/each}}
 </ul>
