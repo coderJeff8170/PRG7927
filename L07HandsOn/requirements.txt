@@ -18,29 +18,38 @@ Add the routes of the following:
 
 User signup: /users/signup[X]
 User login: /users/login[X]
-Show user profile: /users/profile[X]
+Show user profile: /users/profile
 Show a list of users: /users[X]
 Show a specific user: /users/:id[X]
 Delete user: /users/:id[X]//questions about this one.
 Step 4
-Use passport's local strategy so only the user sees their profile in the /users/profile route and can see other users profiles when they use the /users/:id route.
+Use passport's local strategy so only the user sees their profile in the /users/profile route[X]
+and can see other users profiles when they use the /users/:id route.?
+I'm assuming this means only if they're logged in.^^ = seems to be negated in step 6????
+I mean, why would you got to all this auth trouble only to allow all users to be able to see every user profile?
 
-Don't forget the installations needed when working with Passport
+Don't forget the installations needed when working with Passport[X]
 Step 5
-Allow the Admin users to be able to view a list of all users
+Allow the Admin users to be able to view a list of all users[X]
 
-You will need to update your database to include at least one Admin user
-Use the route of / to see the list of users by their name
-Hint! Remember the / route in the users.js file will be localhost:3000/users as was set up in app.js
+You will need to update your database to include at least one Admin user[X]
+Use the route of / to see the list of users by their name[X]
+Hint! Remember the / route in the users.js file will be localhost:3000/users as was set up in app.js[X]
 
-If an unauthorized user tries to access this route, send them a message that they are not authorized to access the page.
-Use the Admin property on your logged in user to determine if they should be allowed access to all users.
+If an unauthorized user tries to access this route, send them a message that they are not authorized to access the page.[X]
+Use the Admin property on your logged in user to determine if they should be allowed access to all users.[X]
 Step 6
-Allow the Admin users to be able to click on and view a specific user.
+Allow the Admin users to be able to click on and view a specific user.[X]
 
-Use the route of /users/:id
-Step 7
-Allow the Admin users to be able to delete users from the database. If a user is not an admin, they should not be able to delete users.
+Use the route of /users/:id[X]
+Step 7 this sets the deleted column to true, so it would be a POST request? 
+Allow the Admin users to be able to delete users from the database. If a user is not an admin, they should not be able to delete users.[X]
+
+add a delete button on every user[X]
+when button is clicked, it will set the user's deleted column to true.[X]
+when user is deleted, they should no longer show in the users list[X]
+redirect to users page.[X]
+user should remain in database[X]
 
 Remember to only update the users to have a column of Deleted set to true when "deleted"
-You will need to run another migration to add the column of Deleted to the database.
+You will need to run another migration to add the column of Deleted to the database.[X]

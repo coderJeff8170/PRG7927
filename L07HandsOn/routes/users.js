@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const models = require('../models');
+const passport = require('../services/passport');
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -12,8 +13,6 @@ router.get('/signup', function(req, res, next){
     res.render('signup');
   });
 //create a user with a POST route
-// I guess by email since there's no username column so email = username
-//nope you forgot the username column!! model/migration
 router.post('/signup', function(req, res, next){
     models.users.findOrCreate({
         where:{
@@ -39,80 +38,119 @@ router.post('/signup', function(req, res, next){
 //render login page
 router.get('/login', function(req, res, next){
     res.render('login');
-})
+});
 
-//POST login information
-//show individual user profile
-router.post('/login', function(req, res, next){
-    models.users.findOne({
-        where: {
-            Username: req.body.username,
-            Password: req.body.password
-        }
-    })
-    .then(user => {
-        if(user){
-            res.render('profile', {
-                firstname: user.FirstName,
-                lastname: user.LastName,
-                email: user.Email,
-                username: user.Username,
+//when user hits login button, authenticate with passport
+//change to used passport
+router.post('/login', passport.authenticate('local', {
+    failureRedirect: 'login'
+}),
+function(req, res, next){
+    //res.redirect(`/profile/${req.user.UserId}`);
+    res.redirect('profile');//ok!
+});
+
+
+//render individual user profile if user is authenticated
+router.get('/profile', function(req, res, next){
+    if(req.user){
+        //if req.user exists(meaning logged in), find user by id,
+        models.users.findByPk(parseInt(req.user.UserId)).then(
+            user => {
+                if(user){
+                    //if found, render profile
+                    res.render('profile', {
+                        firstname: user.FirstName,
+                        lastname: user.LastName,
+                        email: user.Email,
+                        username: user.Username
+                    });
+                }else{
+                    //if not, say user doesn't exist
+                    res.send('sorry, user does not exist');
+                }
             });
-        }else{
-            res.send('wrong login info');
-        }
-    });
+    }else{
+        //if req.user isn't logged in, return to login page
+        res.redirect('login');
+    } 
 });
 
 
 
-// Show a list of users: /users GET
-// (if logged in and admin)
+
+
+// Show a list of users: /users GET ( only if logged in and admin)
 router.get('/', function(req, res, next){
     //remember, passport is gonna add a user property to the req
-        models.users.findAll()
+    //if(req.user && isAdmin<= how?){
+    if(req.user && req.user.Admin){
+        models.users.findAll({
+            where: {
+                deleted: false
+            }
+        })
         .then(allUsers => {
             res.render('users', {
-                users: allUsers
+            users: allUsers
             });
         });
-
+    }else if (req.user){
+        res.send(`Sorry ${req.user.Username}, you are not authorized to see all users.`);
+    } else {
+        res.render('login');
+    }  
 });
 
-// Show a specific user: /users/:id GET
+//Show a specific user: /users/:id GET only if user and admin
 router.get('/:id', function(req, res, next){
-    models.users.findByPk(parseInt(req.params.id))
-    .then(user => {
-        if(user){
-            res.render('profile', {
-                firstname: user.FirstName,
-                lastname: user.LastName,
-                email: user.Email,
-                username: user.Username
-            })
-        }else{
-            res.send('something went awry!')
-        }
-    });
+    if(req.user && req.user.Admin){
+        models.users.findByPk(parseInt(req.params.id))
+        .then(user => {
+            if(user){
+                res.render('profile', {
+                    firstname: user.FirstName,
+                    lastname: user.LastName,
+                    email: user.Email,
+                    username: user.Username
+                })
+            }else{
+                res.send('something went awry!')
+            }
+        });
+    }
 });
 
 // Delete user: /users/:id DELETE (only if logged in and admin)
-router.delete('/:id', function(req, res, next){
-    console.log("button works");
+router.post('/:id', function(req, res, next){
+    
+    let userId = parseInt(req.params.id);
+
+      models.users
+      .update({ Deleted: true }, { where: {
+          UserId: userId
+      }})
+      .then(
+        res.redirect(`/users`)
+      )
+      .catch(err => {
+        res.status(400);
+        res.send('Houston, we have a problem!');
+      });
 })
 
-router.delete('/:id', function (req, res, next) {
-    let userId = parseInt(req.params.id);
-    models.users
-    .destroy( { where: { UserId : userId } })
-    .then(result => {
-      //just redirects back to all actors, since this actor no longer exists!
-      res.redirect('/actors');
-    })
-    .catch(err => {
-      res.status(400);
-      res.send("You're having trouble deleting this person!")
-    })
-  });
+// router.delete('/:id', function (req, res, next) {
+//     let userId = parseInt(req.params.id);
+//     models.users
+//     .destroy( { where: { UserId : userId } })
+//     .then(result => {
+//       //just redirects back to all users, since this user no longer exists!
+//       res.redirect('/');
+//     })
+//     .catch(err => {
+//       res.status(400);
+//       res.send("You're having trouble deleting this person!")
+//     })
+//   });
 
 module.exports = router;

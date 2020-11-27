@@ -88,7 +88,7 @@ router.get('/', function(req, res, next) {
       .catch(err => {
         res.status(400);
         res.send('Houston, we have a problem!');
-      })
+      });
     });
   
     //delete actor route
