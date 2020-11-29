@@ -27,6 +27,7 @@ Add a new column to your category model called default_price that is a decimal t
 This column will be used for storing default rental prices for movies within that category
 Use the sequelize-auto-migration command to generate a new migration[X]
 Run the migration[X]
+
 Write the code to display all category names and their default prices.[X]
 You will need a new hbs file and a get() route[X]
 
