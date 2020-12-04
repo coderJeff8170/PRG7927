@@ -1,0 +1,12 @@
+Step 1
+Write the code for the /starTrekPlanets route so your Front-End application
+displays information about the following planets in the Star Trek universe:
+
+Id: 1, Name: Q'onoS, Moons: 1
+Id: 2, Name: Vulcan, Moons: 0
+Id: 3, Name: Earth, Moons: 1
+Id: 4, Name: Rator III, Moons: 0
+
+Note: Remember that React and Angular will be case sensitive. 
+The JSON you send needs to match what the front end expects, similar to the 
+format of the /staticPlanets route.

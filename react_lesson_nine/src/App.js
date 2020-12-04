@@ -1,5 +1,7 @@
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Planets from './components/planets';
 
 function App() {
   return (
@@ -18,6 +20,10 @@ function App() {
           Learn React
         </a>
       </header>
+      <Planets uri="http://localhost:3001/staticPlanets"/>
+      {/* Add reuseable planet component with new URI here: */}
+      <hr />
+        <Planets uri="http://localhost:3001/starTrekPlanets"/>
     </div>
   );
 }

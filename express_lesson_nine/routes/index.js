@@ -12,4 +12,9 @@ router.get('/staticPlanets', function(req, res, next) {
   res.send(JSON.stringify(staticModels.planet));
 });
 
+/* GET star trek planets */
+router.get('/starTrekPlanets', function (req, res, next) {
+  
+});
+
 module.exports = router;

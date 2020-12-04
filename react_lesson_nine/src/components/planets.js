@@ -1,9 +1,9 @@
 import React from 'react';
 
 import axios from 'axios';
-import { ReactComponent } from '*.svg';
 
-class Planets extends ReactComponent {
+
+class Planets extends React.Component {
     state = {
         planetData: []
     }
@@ -13,7 +13,9 @@ class Planets extends ReactComponent {
 
         axios.get(encodedURI).then(response => {
             this.setState(() => {
-                planetData: response.data
+                return{
+                    planetData: response.data
+                }
             });
         })
     }
