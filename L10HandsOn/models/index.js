@@ -7,6 +7,8 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
+//import the associations function to describe relation between tables
+const associations = require('./rel/associations');
 
 let sequelize;
 if (config.use_env_variable) {
@@ -30,6 +32,9 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+
+//calls function describing relationship between users and posts
+associations(db);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

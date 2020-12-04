@@ -57,7 +57,7 @@ sequelize model:generate --name posts --attributes PostId:integer,PostTitle:stri
 Step 4
 Update models to reflect the create table migrations [X]
 
-ran initial migration here.
+ran initial migration here. [X] 
 makemigration --name initial_migration
 
 Don't forget the associations Lesson 6:4 - it defines relationships with a thru table tho :/
@@ -66,7 +66,17 @@ this SHOULD, theoretically, be easier...
 A post hasOne User.
 A user hasMany Posts.
 
+To create a One-To-Many relationship, the hasMany and belongsTo associations are used together;
 
+Create a new folder in your "models" folder called rel. [X]
+This will be the folder where you hold any files pertaining to relationships between models.
+
+Create a file in your rel folder called associations.js.  [X]
+You will define the relationships between your "users" and "posts" models in this file.
+
+Make another migration after associations are done.
+
+Migrate to the database. Do it when you get home too after a git pull.
 
 
 Step 5
