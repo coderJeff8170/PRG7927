@@ -23,33 +23,52 @@ setup config file first then. [X]
 Since no database has been created yet you can create the database defined
 in your config.json file by using the following command:
 
-sequelize db:create
+sequelize db:create work:[X] home:
 
-Step 3
-Run migrations to create two new tables: users and posts
+Step 3 (7:3 to create models for an empty db)
+
+Run migrations to create two new tables: users and posts [X]
 
 These tables should have the following structure:
+
+sequelize model:generate --name users --attributes UserId:integer,FirstName:string,LastName:string,Username:string,Password:string,Email:string,Admin:boolean
+^^done
 users:
-UserId: integer, autoincrement, primary key, not null
+UserId: integer, autoincrement, primary key, not null [X]
 FirstName: string
 LastName: string
-Username: string, unique
+Username: string, unique [X]
 Password: string
-Email: string, unique
-Admin: boolean, default value is false, not null
-createdAt: date, not null
-updatedAt: date, not null
+Email: string, unique [X]
+Admin: boolean, default value is false, not null [X]
+createdAt: date, not null <= these are created automatically
+updatedAt: date, not null <= these are created automatically
+
 posts:
-PostId: integer, autoincrement, primary key, not null
+PostId: integer, autoincrement, primary key, not null [X]
 PostTitle: string
 PostBody: string
-UserId: integer, foreign key to UserId in users table
-createdAt: date, not null
-updatedAt: date, not null
-Step 4
-Update models to reflect the create table migrations
+UserId: integer, foreign key to UserId in users table <= wot? this is misleading. Association is defined elsewhere.
+createdAt: date, not null <= these are created automatically
+updatedAt: date, not null <= these are created automatically
 
-Don't forget the associations
+sequelize model:generate --name posts --attributes PostId:integer,PostTitle:string,PostBody:string,UserId:integer
+^^done
+Step 4
+Update models to reflect the create table migrations [X]
+
+ran initial migration here.
+makemigration --name initial_migration
+
+Don't forget the associations Lesson 6:4 - it defines relationships with a thru table tho :/
+this SHOULD, theoretically, be easier...
+
+A post hasOne User.
+A user hasMany Posts.
+
+
+
+
 Step 5
 Users should be able to Signup/Login/Logout
 
