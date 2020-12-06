@@ -147,7 +147,7 @@ router.get('/profile', function(req, res, next){
     });
   }else{
     res.status(401);
-    res.send('you must be loggied in!');
+    res.send('you must be logged in!');
   }
   
 });

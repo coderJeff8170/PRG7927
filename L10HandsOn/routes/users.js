@@ -13,8 +13,8 @@ router.get('/signup', function(req, res, next){
   res.render('signup');
 });
 
-//TODO: POST signup form
-
+//POST signup form
+//changed to use hashpassword function
 router.post('/signup', function(req, res, next){
   models.users
   .findOrCreate({
@@ -26,11 +26,16 @@ router.post('/signup', function(req, res, next){
       LastName: req.body.lastname,
       Email: req.body.email,
       Username: req.body.username,
-      Password: req.body.password
+      //Password: req.body.password
+      Password: authService.hashPassword(req.body.password)
     }
   }).spread(function(result, created){
     if(created){
-      res.send('user successfully created');
+      //res.send('user successfully created');
+//TODO: change this to go right to user profile after testing..
+      res.render('login', {
+        message: "User Successfully created! please login!"
+      });
     }else{
       res.send('this user already exists');
     }
@@ -39,16 +44,19 @@ router.post('/signup', function(req, res, next){
 
 //TODO: GET login page
 router.get('/login', function(req, res, next){
-  res.render('login');
+  res.render('login', {
+    message: "Welcome, please login!"
+  });
 });
 
-//TODO: POST login form
-//TODO: POST login form
+//POST login form
+//updated to use token
+//TODO: update to compare hashed passwords
+
 router.post('/login', function (req, res, next) {
   models.users.findOne({
     where: {
-      Username: req.body.username,
-      Password: req.body.password
+      Username: req.body.username
     }
   }).then(user => {
     if (!user) {
@@ -56,22 +64,56 @@ router.post('/login', function (req, res, next) {
       return res.status(401).json({
         message: "Login Failed"
       });
-    }
-    if (user) {
-      let token = authService.signUser(user); // <--- Uses the authService to create jwt token
-      res.cookie('jwt', token); // <--- Adds token to response as a cookie
-      res.render('profile', {
-                firstname: user.FirstName,
-                lastname: user.LastName,
-                email: user.Email,
-                username: user.Username
-              });
     } else {
-      console.log('Wrong password');
-      res.redirect('login')
+      let passwordMatch = authService.comparePasswords(req.body.password, user.Password);
+      if (passwordMatch) {
+        let token = authService.signUser(user);
+        res.cookie('jwt', token);
+
+        if(user.Admin){
+          //TODO: render Admin page...
+          res.send('Admin Login successful');
+        }else{
+          //TODO: render user page...
+          res.send('Login successful');
+        }
+      } else {
+        console.log('Wrong password');
+        res.send('Wrong password');
+      }
     }
   });
 });
+
+// router.post('/login', function (req, res, next) {
+//   models.users.findOne({
+//     where: {
+//       Username: req.body.username,
+//       Password: req.body.password
+//     }
+//   }).then(user => {
+//     if (!user) {
+//       console.log('User not found')
+//       return res.status(401).json({
+//         message: "Login Failed"
+//       });
+//     }
+//     if (user) {
+//       let token = authService.signUser(user); // <--- Uses the authService to create jwt token
+//       res.cookie('jwt', token); // <--- Adds token to response as a cookie
+//       res.render('profile', {
+//                 firstname: user.FirstName,
+//                 lastname: user.LastName,
+//                 email: user.Email,
+//                 username: user.Username
+//               });
+//     } else {
+//       console.log('Wrong password');
+//       res.redirect('login')
+//     }
+//   });
+// });
+
 // router.post('/login', function(req, res, next){
 //   models.users
 //   .findOne({
@@ -94,9 +136,77 @@ router.post('/login', function (req, res, next) {
 //   })
 // })
 
+//GET profile - secure route:
+//updated to check for token because of logout
+//TODO: admin profile if user is admin
+router.get('/profile', function (req, res, next) {
+  //get the token from the request
+  let token = req.cookies.jwt;
+  //if there is one
+  if (token) {
+    //verify it
+    authService.verifyUser(token)
+      .then(user => {
+        //if verified
+        if (user) {
+          //TODO: if user.admin
+          //TODO: else just render user profile
+          //TODO: check possiblity of rendering one obj here, and 
+          //conditional rendering on hbs page for admin stuff??
+          if(user.Admin){
+            res.render('adminProfile', {
+              firstname: user.FirstName,
+              lastname: user.LastName,
+              email: user.Email,
+              username: user.Username
+            });
+          }else{
+            res.render('profile', {
+              firstname: user.FirstName,
+              lastname: user.LastName,
+              email: user.Email,
+              username: user.Username
+            });
+          }
+          
+        } else {
+          //if unable to verify
+          res.status(401);
+          res.send('Invalid authentication token');
+        }
+      });
+  } else {
+    //if there's no token, they're logged out
+    res.status(401);
+    res.send('Must be logged in');
+  }
+});
+
+// router.get('/profile', function (req, res, next) {
+//   let token = req.cookies.jwt;
+//   authService.verifyUser(token)
+//     .then(user => {
+//       if (user) {
+//         res.render('profile', {
+//           firstname: user.FirstName,
+//           lastname: user.LastName,
+//           email: user.Email,
+//           username: user.Username
+//         });
+//       } else {
+//         res.status(401);
+//         res.send('Must be logged in');
+//       }
+//     })
+// });
+
+
 //TODO: POST logout button - logout is actually get?
-router.get('/logout', function(req, res, next){
-  res.send('logged out');
-})
+router.get('/logout', function (req, res, next) {
+  res.cookie('jwt', "", { expires: new Date(0) });
+  res.render('login', {
+    message: "Log Back In:"
+  });
+  });
 
 module.exports = router;

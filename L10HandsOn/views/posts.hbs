@@ -1,0 +1,17 @@
+<h1>Welcome to the posts page!</h1>
+{{!-- TODO: provide a form to create a new post --}}
+<h3>New Post</h3>
+<form method="POST" action="/users/posts" id="createPost" name="createPost">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+        <label for="body">Body:</label>
+        <input type="textarea" id="body" name="body" required>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+{{!-- TODO: provide a list of posts --}}

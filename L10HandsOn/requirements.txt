@@ -12,10 +12,13 @@ therefore:
 npm install [X]
 npm install --save mysql2 [X]
 npm install --save sequelize@4.43.0 [X]
-npm install --save jsonwebtoken[X]
+npm install --save jsonwebtoken [X]
+npm install --save bcryptjs [X]
     all three above together: npm install --save mysql2 sequelize@4.43.0 jsonwebtoken
 npm install sequelize-cli [X]
 sequelize init [X]
+TODO: define timestamps!
+
 
 Step 2
 Create a new MySQL database called bulletinboard
@@ -85,36 +88,67 @@ Step 5
 Users should be able to Signup/Login/Logout
 these are users so they should be on the users.js route
 
-TODO: Make signup view [X]
-TODO: Make signup GET route [X]
-TODO: Make signup POST route [X]
+Make signup view [X]
+Make signup GET route [X]
+Make signup POST route [X]
 
-TODO: Make login view [X]
-TODO: Make login GET route[X]
-TODO: Make login POST route[X]
+Make login view [X]
+Make login GET route[X]
+Make login POST route[X]
 
-TODO: Make logout route - present but needs changed
-TODO: make it expire cookie and set to empty string.
+Make logout route - present but needs changed [X]
+make it expire cookie and set to empty string. [X]
+Make a logout button [X]
 
-Use JWT for secure login (hashing and salting passwords)
+Use JWT for secure login (and use hashing and salting for passwords)
 this means -> 
+
     installing jsonwebtoken(shoulda done it at beginning.. added to start of sheet)
     create a services folder with auth.js in it [X]
+
     hook up to the login route[x]
-    Authentication service validation function 'verifyUser' added to auth.js
-    configure routes to use verifyUser to secure them (profile)
-    verify that there is a jwt token on the Request
-    install and require bcrypt
-    add hash passwords and compare passwords functions to auth.js
+
+    Authentication service validation function 'verifyUser' added to auth.js[X]
+
+    configure routes to use verifyUser to secure them (profile)[X]
+
+    TODO: verify that there is a jwt token on the Request[X] - on profile request anyways
+    install and require bcryptjs[X]
+
+    npm install --save bcrypt(again, do at beginning)[X]
+
+    require bcrypt in the auth file, and make sure auth file is linked to route file[X]
+
+    add hash password function to auth js [X]
     
+    use this function in SIGNUP POST route instead of password: req.body.password[X]
+    eg: Password: authService.hashPassword(req.body.password) 
+        ^^this will gobbledegook the password in the db
 
+        make sure it works before proceeding [X]
 
+    TODO: add compare passwords functions to auth.js [X]
 
+    TODO: add compare passwords function to user login route[x]
+        test again.[X]
 
+Step 5.5
+Create a cheap navbar![X]
+create a list of anchor tags with hrefs pointing to:
+    Profile | Posts | Login | Signup
+    **horizontal rule here**
+    rest of page.. 
+Test it.[X]
+TODO: Add it to rest of hbs files...
+
+TODO: explore template/fragent possibilities
 
 
 Step 6
-Users should be able to create, edit, and delete
+Users should be able to create, edit, and delete (what?) -> POSTS!
+
+All posts should show up on a posts page
+Maybe have three tabs - All, Others, Mine?
 
 Be able to click on a post to update or delete it
 Run a migration to add a Deleted column
@@ -122,8 +156,8 @@ After the post has been deleted, redirect the user to their profile page
 Step 7
 Users should be able to view their profile page. Their profile page should render the following:
 
-Their full name
-Their username
+Their full name[X]
+Their username[X]
 The posts they have written
 Step 8
 Admin users should be able to see a list of all users that have not been deleted
