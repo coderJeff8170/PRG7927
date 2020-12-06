@@ -12,6 +12,8 @@ therefore:
 npm install [X]
 npm install --save mysql2 [X]
 npm install --save sequelize@4.43.0 [X]
+npm install --save jsonwebtoken[X]
+    all three above together: npm install --save mysql2 sequelize@4.43.0 jsonwebtoken
 npm install sequelize-cli [X]
 sequelize init [X]
 
@@ -74,15 +76,43 @@ This will be the folder where you hold any files pertaining to relationships bet
 Create a file in your rel folder called associations.js.  [X]
 You will define the relationships between your "users" and "posts" models in this file.
 
-Make another migration after associations are done.
+Make another migration after associations are done.[X]
 
-Migrate to the database. Do it when you get home too after a git pull.
+Migrate to the database. Do it when you get home too after a git pull.[X]
 
 
 Step 5
 Users should be able to Signup/Login/Logout
+these are users so they should be on the users.js route
+
+TODO: Make signup view [X]
+TODO: Make signup GET route [X]
+TODO: Make signup POST route [X]
+
+TODO: Make login view [X]
+TODO: Make login GET route[X]
+TODO: Make login POST route[X]
+
+TODO: Make logout route - present but needs changed
+TODO: make it expire cookie and set to empty string.
 
 Use JWT for secure login (hashing and salting passwords)
+this means -> 
+    installing jsonwebtoken(shoulda done it at beginning.. added to start of sheet)
+    create a services folder with auth.js in it [X]
+    hook up to the login route[x]
+    Authentication service validation function 'verifyUser' added to auth.js
+    configure routes to use verifyUser to secure them (profile)
+    verify that there is a jwt token on the Request
+    install and require bcrypt
+    add hash passwords and compare passwords functions to auth.js
+    
+
+
+
+
+
+
 Step 6
 Users should be able to create, edit, and delete
 
@@ -96,7 +126,8 @@ Their full name
 Their username
 The posts they have written
 Step 8
-Admin users should be able to see a list of all users that have not been deleted by the user's first and last name
+Admin users should be able to see a list of all users that have not been deleted
+by the user's first and last name
 
 Run another migration to add a Deleted column
 Render a different hbs file for the Admin profile page, which should list all users

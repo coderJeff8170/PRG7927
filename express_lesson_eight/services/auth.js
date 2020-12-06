@@ -1,10 +1,12 @@
 //setup json web tokens here
 const jwt = require('jsonwebtoken');
-const models = require('../models');
+const models = require('../models/index');
 const bcrypt = require('bcryptjs');
 
 //takes in user info and encrypts it using a secret key string that can be whatever you need
 //it to be. jwt.sign takes in the user, a secret key, and an expiration time as params
+
+
 
 var authService = {
     signUser: function(user){

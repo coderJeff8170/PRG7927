@@ -33,30 +33,30 @@ router.post('/signup', function(req, res, next){
 });
 
 //from chapter
-// router.post('/login', function (req, res, next) {
-//   models.users.findOne({
-//     where: {
-//       Username: req.body.username
-//     }
-//   }).then(user => {
-//     if (!user) {
-//       console.log('User not found')
-//       return res.status(401).json({
-//         message: "Login Failed"
-//       });
-//     } else {
-//       let passwordMatch = authService.comparePasswords(req.body.password, user.Password);
-//       if (passwordMatch) {
-//         let token = authService.signUser(user);
-//         res.cookie('jwt', token);
-//         res.send('Login successful');
-//       } else {
-//         console.log('Wrong password');
-//         res.send('Wrong password');
-//       }
-//     }
-//   });
-// });
+router.post('/login', function (req, res, next) {
+  models.users.findOne({
+    where: {
+      Username: req.body.username
+    }
+  }).then(user => {
+    if (!user) {
+      console.log('User not found')
+      return res.status(401).json({
+        message: "Login Failed"
+      });
+    } else {
+      let passwordMatch = authService.comparePasswords(req.body.password, user.Password);
+      if (passwordMatch) {
+        let token = authService.signUser(user);
+        res.cookie('jwt', token);
+        res.send('Login successful');
+      } else {
+        console.log('Wrong password');
+        res.send('Wrong password');
+      }
+    }
+  });
+});
 
 
 
@@ -113,20 +113,20 @@ router.post('/signup', function(req, res, next){
 // });
 
 //test function
-router.post('/login', function (req, res, next) {
-  models.users.findOne({
-    where: {
-      Username: req.body.username
-    }
-  }).then(user => {
-    if (!user) {
-      res.send('user not found');
+// router.post('/login', function (req, res, next) {
+//   models.users.findOne({
+//     where: {
+//       Username: req.body.username
+//     }
+//   }).then(user => {
+//     if (!user) {
+//       res.send('user not found');
       
-    } else {
-        res.send('User exists');
-    }
-  });
-});
+//     } else {
+//         res.send('User exists');
+//     }
+//   });
+// });
 
 
 
