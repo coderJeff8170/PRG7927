@@ -12,13 +12,19 @@ var authService = require('../services/auth');
 //TODO: secure this route
 //TODO: figure out how to get author name in here.
 router.get('/', function (req, res, next) {
-    //TODO: find all where deleted is false
+  let token = req.cookies.jwt;
+  if(token){
+    //TODO: find all where deleted is false - add deleted column first
     models.posts.findAll()
     .then(posts => {
         res.render('posts', {
             posts: posts
         });
     });
+  }else{
+    res.send('not logged in');
+  }
+    
   });
 
 //you're going to have to run a findAll function here lol.

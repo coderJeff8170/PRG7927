@@ -85,7 +85,7 @@ Migrate to the database. Do it when you get home too after a git pull.[X]
 
 
 Step 5
-Users should be able to Signup/Login/Logout
+Users should be able to Signup/Login/Logout[X]
 these are users so they should be on the users.js route
 
 Make signup view [X]
@@ -139,7 +139,7 @@ create a list of anchor tags with hrefs pointing to:
     **horizontal rule here**
     rest of page.. 
 Test it.[X]
-TODO: Add it to rest of hbs files...
+Add it to rest of hbs files...[X]
 
 TODO: explore template/fragent possibilities
 
@@ -147,14 +147,14 @@ TODO: explore template/fragent possibilities
 Step 6
 Users should be able to create, edit, and delete (what?) -> POSTS!
 
-Probably should: Create a posts route to store the post routes.
+Probably should: Create a posts route to store the post routes.[X]
 YES - Tyler does not have users/posts, he's got /posts - I guess that makes sense as
 posts is not a subclass of users...
 Get it rendering first.[X]
 
 
 All posts should show up on a posts page [X]
-Maybe have three tabs - All, Others, Mine?
+TODO: Maybe have three tabs - All, Others, Mine?
 
 Be able to click on a post to update or delete it
 
@@ -165,7 +165,7 @@ Post delete button[X]
 Post delete route
 
 
-Run a migration to add a Deleted column
+Run a migration to add a Deleted column [X]
 After the post has been deleted, redirect the user to their profile page
 
 Step 7
