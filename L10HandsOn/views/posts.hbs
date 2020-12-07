@@ -1,17 +1,45 @@
-<h1>Welcome to the posts page!</h1>
+{{!-- Put nav here --}}
+<div>
+    <span><a href="/users/profile">Profile</a> |</span>
+    <span><a href="/posts">Posts</a></span>
+    <hr>
+<div>
+<h1>Welcome to the {{title}} page!</h1>
+<h2>{{message}}</h2>
+<h2>{{firstname}}</h2>
 {{!-- TODO: provide a form to create a new post --}}
+{{!-- how to associate a user with the post? --}}
 <h3>New Post</h3>
-<form method="POST" action="/users/posts" id="createPost" name="createPost">
+<form method="POST" action="/posts" id="createPost" name="createPost">
     <div>
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required>
     </div>
     <div>
         <label for="body">Body:</label>
-        <input type="textarea" id="body" name="body" required>
+        <textarea type="text" id="body" name="body" required></textarea>
     </div>
     <div>
         <button type="submit">Submit</button>
     </div>
 </form>
+<hr>
+{{!-- test this first^^ --}}
 {{!-- TODO: provide a list of posts --}}
+<ul>
+    {{#each posts}}
+    <li>
+        <h2>Title: {{PostTitle}}</h2>
+        <h4>Author: </h4>
+        <p>{{PostBody}}</p>
+        <form method="PUT" action="/posts/{{PostId}}" 
+            <button type="submit" >Edit</button>
+        </form>
+        <form method="DELETE" action="/posts/{{PostId}}" 
+            onsubmit="return confirm('Are you sure you want to delete this post?');">
+            <button type="submit" >Delete</button>
+        </form>
+    </li>
+    {{/each}}
+</ul>
+

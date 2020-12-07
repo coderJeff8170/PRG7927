@@ -147,12 +147,27 @@ TODO: explore template/fragent possibilities
 Step 6
 Users should be able to create, edit, and delete (what?) -> POSTS!
 
-All posts should show up on a posts page
+Probably should: Create a posts route to store the post routes.
+YES - Tyler does not have users/posts, he's got /posts - I guess that makes sense as
+posts is not a subclass of users...
+Get it rendering first.[X]
+
+
+All posts should show up on a posts page [X]
 Maybe have three tabs - All, Others, Mine?
 
 Be able to click on a post to update or delete it
+
+Post edit button[X]
+Post edit route
+
+Post delete button[X]
+Post delete route
+
+
 Run a migration to add a Deleted column
 After the post has been deleted, redirect the user to their profile page
+
 Step 7
 Users should be able to view their profile page. Their profile page should render the following:
 
