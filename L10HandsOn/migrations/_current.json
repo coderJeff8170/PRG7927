@@ -19,12 +19,12 @@
                     "seqType": "Sequelize.STRING"
                 },
                 "UserId": {
-                    "field": "UserId",
-                    "allowNull": true,
                     "references": {
                         "model": "users",
                         "key": "UserId"
                     },
+                    "field": "UserId",
+                    "allowNull": true,
                     "onDelete": "CASCADE",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
@@ -120,5 +120,5 @@
             "indexes": []
         }
     },
-    "revision": 3
+    "revision": 1
 }

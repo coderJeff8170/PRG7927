@@ -78,60 +78,9 @@ router.post('/login', function (req, res, next) {
   });
 });
 
-// router.post('/login', function (req, res, next) {
-//   models.users.findOne({
-//     where: {
-//       Username: req.body.username,
-//       Password: req.body.password
-//     }
-//   }).then(user => {
-//     if (!user) {
-//       console.log('User not found')
-//       return res.status(401).json({
-//         message: "Login Failed"
-//       });
-//     }
-//     if (user) {
-//       let token = authService.signUser(user); // <--- Uses the authService to create jwt token
-//       res.cookie('jwt', token); // <--- Adds token to response as a cookie
-//       res.render('profile', {
-//                 firstname: user.FirstName,
-//                 lastname: user.LastName,
-//                 email: user.Email,
-//                 username: user.Username
-//               });
-//     } else {
-//       console.log('Wrong password');
-//       res.redirect('login')
-//     }
-//   });
-// });
-
-// router.post('/login', function(req, res, next){
-//   models.users
-//   .findOne({
-//     where: {
-//       Username: req.body.username,
-//       Password: req.body.password
-//     }
-//   })
-//   .then(user => {
-//     if(user){
-//       res.render('profile', {
-//         firstname: user.FirstName,
-//         lastname: user.LastName,
-//         email: user.Email,
-//         username: user.Username
-//       });
-//     }else{
-//       res.send('login failed');
-//     }
-//   })
-// })
-
 //GET profile - secure route:
 //updated to check for token because of logout
-//TODO: admin profile if user is admin
+//admin profile if user is admin
 router.get('/profile', function (req, res, next) {
   //get the token from the request
   let token = req.cookies.jwt;
@@ -140,14 +89,9 @@ router.get('/profile', function (req, res, next) {
     //verify it
     authService.verifyUser(token)
       .then(user => {
-        //if verified
         if (user) {
-          //TODO: if user.admin
-          //TODO: else just render user profile
-          //TODO: check possiblity of rendering one obj here, and 
-          //conditional rendering on hbs page for admin stuff??
           if(user.Admin){
-            res.render('adminProfile', {
+            res.render('admin', {
               firstname: user.FirstName,
               lastname: user.LastName,
               email: user.Email,
@@ -161,7 +105,6 @@ router.get('/profile', function (req, res, next) {
               username: user.Username
             });
           }
-          
         } else {
           //if unable to verify
           res.status(401);
@@ -176,21 +119,40 @@ router.get('/profile', function (req, res, next) {
 });
 
 // router.get('/profile', function (req, res, next) {
+//   //get the token from the request
 //   let token = req.cookies.jwt;
-//   authService.verifyUser(token)
-//     .then(user => {
-//       if (user) {
-//         res.render('profile', {
-//           firstname: user.FirstName,
-//           lastname: user.LastName,
-//           email: user.Email,
-//           username: user.Username
-//         });
-//       } else {
-//         res.status(401);
-//         res.send('Must be logged in');
-//       }
-//     })
+//   //if there is one
+//   if (token) {
+//     //verify it
+//     authService.verifyUser(token)
+//       .then(user => {
+//         if (user) {
+//           if(user.Admin){
+//             res.render('admin', {
+//               firstname: user.FirstName,
+//               lastname: user.LastName,
+//               email: user.Email,
+//               username: user.Username
+//             });
+//           }else{
+//             res.render('profile', {
+//               firstname: user.FirstName,
+//               lastname: user.LastName,
+//               email: user.Email,
+//               username: user.Username
+//             });
+//           }
+//         } else {
+//           //if unable to verify
+//           res.status(401);
+//           res.send('Invalid authentication token');
+//         }
+//       });
+//   } else {
+//     //if there's no token, they're logged out
+//     res.status(401);
+//     res.send('Must be logged in');
+//   }
 // });
 
 

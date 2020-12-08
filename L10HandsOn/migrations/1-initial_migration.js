@@ -5,57 +5,19 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
- * createTable "posts", deps: []
  * createTable "users", deps: []
+ * createTable "posts", deps: [users, users]
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "initial_migration",
-    "created": "2020-12-04T17:58:34.602Z",
+    "created": "2020-12-08T12:30:33.578Z",
     "comment": ""
 };
 
 var migrationCommands = [{
-        fn: "createTable",
-        params: [
-            "posts",
-            {
-                "PostId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "PostId",
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "allowNull": false
-                },
-                "PostTitle": {
-                    "type": Sequelize.STRING,
-                    "field": "PostTitle"
-                },
-                "PostBody": {
-                    "type": Sequelize.STRING,
-                    "field": "PostBody"
-                },
-                "UserId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "UserId"
-                },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
         fn: "createTable",
         params: [
             "users",
@@ -94,6 +56,11 @@ var migrationCommands = [{
                     "field": "Admin",
                     "defaultValue": false
                 },
+                "Deleted": {
+                    "type": Sequelize.BOOLEAN,
+                    "field": "Deleted",
+                    "defaultValue": false
+                },
                 "createdAt": {
                     "type": Sequelize.DATE,
                     "field": "createdAt",
@@ -103,6 +70,67 @@ var migrationCommands = [{
                     "type": Sequelize.DATE,
                     "field": "updatedAt",
                     "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "posts",
+            {
+                "PostId": {
+                    "type": Sequelize.INTEGER,
+                    "field": "PostId",
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "allowNull": false
+                },
+                "PostTitle": {
+                    "type": Sequelize.STRING,
+                    "field": "PostTitle"
+                },
+                "PostBody": {
+                    "type": Sequelize.STRING,
+                    "field": "PostBody"
+                },
+                "UserId": {
+                    "type": Sequelize.INTEGER,
+                    "onUpdate": "CASCADE",
+                    "onDelete": "CASCADE",
+                    "allowNull": true,
+                    "field": "UserId",
+                    "references": {
+                        "model": "users",
+                        "key": "UserId"
+                    }
+                },
+                "Deleted": {
+                    "type": Sequelize.BOOLEAN,
+                    "field": "Deleted",
+                    "defaultValue": false
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                },
+                "userUserId": {
+                    "type": Sequelize.INTEGER,
+                    "field": "userUserId",
+                    "onUpdate": "CASCADE",
+                    "onDelete": "SET NULL",
+                    "references": {
+                        "model": "users",
+                        "key": "UserId"
+                    },
+                    "allowNull": true
                 }
             },
             {}

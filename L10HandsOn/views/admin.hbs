@@ -12,4 +12,16 @@
         <button type="submit">Logout</button>
     </div>
 </form>
+<hr>
 {{!-- TODO: List of 'undeleted' users to go here: --}}
+<ul>
+    {{#each users}}
+    <li>
+        <h2>User: {{FirstName}} {{LastName}}</h2>
+        <form method="DELETE" action="/users/{{UserId}}" 
+            onsubmit="return confirm('Are you sure you want to delete this user?');">
+            <button type="submit" >Delete</button>
+        </form>
+    </li>
+    {{/each}}
+</ul>
