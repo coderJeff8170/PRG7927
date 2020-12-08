@@ -8,13 +8,12 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-//TODO: GET signup page
+//GET signup page
 router.get('/signup', function(req, res, next){
   res.render('signup');
 });
 
 //POST signup form
-//changed to use hashpassword function
 router.post('/signup', function(req, res, next){
   models.users
   .findOrCreate({
@@ -31,7 +30,6 @@ router.post('/signup', function(req, res, next){
     }
   }).spread(function(result, created){
     if(created){
-      //res.send('user successfully created');
 //TODO: change this to go right to user profile after testing..
       res.render('login', {
         message: "User Successfully created! please login!"
@@ -42,7 +40,7 @@ router.post('/signup', function(req, res, next){
   });
 });
 
-//TODO: GET login page
+//GET login page
 router.get('/login', function(req, res, next){
   res.render('login', {
     message: "Welcome, please login!"
@@ -50,9 +48,6 @@ router.get('/login', function(req, res, next){
 });
 
 //POST login form
-//updated to use token
-//TODO: update to compare hashed passwords
-
 router.post('/login', function (req, res, next) {
   models.users.findOne({
     where: {
@@ -79,24 +74,34 @@ router.post('/login', function (req, res, next) {
 });
 
 //GET profile - secure route:
-//updated to check for token because of logout
-//admin profile if user is admin
 router.get('/profile', function (req, res, next) {
   //get the token from the request
   let token = req.cookies.jwt;
   //if there is one
   if (token) {
-    //verify it
+    //verify
     authService.verifyUser(token)
       .then(user => {
+        //if verified
         if (user) {
+          //and if admin
           if(user.Admin){
-            res.render('admin', {
-              firstname: user.FirstName,
-              lastname: user.LastName,
-              email: user.Email,
-              username: user.Username
+            models.users.findAll({
+              where: {
+                Deleted: false
+              }
+              //TODO: and not current user.(user.UserId?)
+            })
+            .then(users =>{
+              res.render('admin', {
+                firstname: user.FirstName,
+                lastname: user.LastName,
+                email: user.Email,
+                username: user.Username,
+                users: users
+              });
             });
+          //else if regular user
           }else{
             res.render('profile', {
               firstname: user.FirstName,
@@ -105,8 +110,8 @@ router.get('/profile', function (req, res, next) {
               username: user.Username
             });
           }
-        } else {
           //if unable to verify
+        } else {
           res.status(401);
           res.send('Invalid authentication token');
         }
@@ -118,50 +123,46 @@ router.get('/profile', function (req, res, next) {
   }
 });
 
-// router.get('/profile', function (req, res, next) {
-//   //get the token from the request
-//   let token = req.cookies.jwt;
-//   //if there is one
-//   if (token) {
-//     //verify it
-//     authService.verifyUser(token)
-//       .then(user => {
-//         if (user) {
-//           if(user.Admin){
-//             res.render('admin', {
-//               firstname: user.FirstName,
-//               lastname: user.LastName,
-//               email: user.Email,
-//               username: user.Username
-//             });
-//           }else{
-//             res.render('profile', {
-//               firstname: user.FirstName,
-//               lastname: user.LastName,
-//               email: user.Email,
-//               username: user.Username
-//             });
-//           }
-//         } else {
-//           //if unable to verify
-//           res.status(401);
-//           res.send('Invalid authentication token');
-//         }
-//       });
-//   } else {
-//     //if there's no token, they're logged out
-//     res.status(401);
-//     res.send('Must be logged in');
-//   }
-// });
 
-
-//TODO: POST logout button - logout is actually get?
+//POST logout button - logout is actually get?
 router.get('/logout', function (req, res, next) {
   res.cookie('jwt', "", { expires: new Date(0) });
   res.render('login', {
     message: "Log Back In:"
   });
   });
+
+//TODO: delete user
+router.post('/:id', function(req, res, next){
+    
+  let userId = parseInt(req.params.id);
+
+    models.users
+    .update({ Deleted: true }, { where: {
+        UserId: userId
+    }})
+    .then(
+      res.send('user successfully deleted')
+      //res.redirect(`/profile`)
+    )
+    .catch(err => {
+      res.status(400);
+      res.send('Houston, we have a problem!');
+    });
+})
+// router.put('/:id', function (req, res, next) {
+//   let userId = parseInt(req.params.id);
+//   models.users
+//   //don't need req.body here because you're deleting the whole thing as opposed to updating some portion of it
+//   .update( { Deleted: true }, { where: { userId : UserId } })
+//   .then(result => {
+//     res.redirect('/users/profile');
+//     //res.send('user deleted');
+//   })
+//   .catch(err => {
+//     res.status(400);
+//     res.send("You're having trouble deleting this fella!")
+//   })
+// });
 
 module.exports = router;

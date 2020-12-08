@@ -173,7 +173,7 @@ Users should be able to view their profile page. Their profile page should rende
 
 Their full name[X]
 Their username[X]
-The posts they have written
+The posts they have written - need to be filtered by user Id once column is working
 Step 8
 Admin users should be able to see a list of all users that have not been deleted
 by the user's first and last name

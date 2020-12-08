@@ -18,7 +18,7 @@
     {{#each users}}
     <li>
         <h2>User: {{FirstName}} {{LastName}}</h2>
-        <form method="DELETE" action="/users/{{UserId}}" 
+        <form method="PUT" action="/users/{{UserId}}" 
             onsubmit="return confirm('Are you sure you want to delete this user?');">
             <button type="submit" >Delete</button>
         </form>
