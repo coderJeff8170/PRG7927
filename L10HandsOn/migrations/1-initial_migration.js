@@ -6,14 +6,14 @@ var Sequelize = require('sequelize');
  * Actions summary:
  *
  * createTable "users", deps: []
- * createTable "posts", deps: [users, users]
+ * createTable "posts", deps: [users]
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "initial_migration",
-    "created": "2020-12-08T12:30:33.578Z",
+    "created": "2020-12-10T00:47:41.738Z",
     "comment": ""
 };
 
@@ -54,6 +54,7 @@ var migrationCommands = [{
                 "Admin": {
                     "type": Sequelize.BOOLEAN,
                     "field": "Admin",
+                    "allowNull": false,
                     "defaultValue": false
                 },
                 "Deleted": {
@@ -98,7 +99,7 @@ var migrationCommands = [{
                 "UserId": {
                     "type": Sequelize.INTEGER,
                     "onUpdate": "CASCADE",
-                    "onDelete": "CASCADE",
+                    "onDelete": "NO ACTION",
                     "allowNull": true,
                     "field": "UserId",
                     "references": {
@@ -120,17 +121,6 @@ var migrationCommands = [{
                     "type": Sequelize.DATE,
                     "field": "updatedAt",
                     "allowNull": false
-                },
-                "userUserId": {
-                    "type": Sequelize.INTEGER,
-                    "field": "userUserId",
-                    "onUpdate": "CASCADE",
-                    "onDelete": "SET NULL",
-                    "references": {
-                        "model": "users",
-                        "key": "UserId"
-                    },
-                    "allowNull": true
                 }
             },
             {}

@@ -25,7 +25,7 @@
                     },
                     "field": "UserId",
                     "allowNull": true,
-                    "onDelete": "CASCADE",
+                    "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "seqType": "Sequelize.INTEGER"
                 },
@@ -45,17 +45,6 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                },
-                "userUserId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "users",
-                        "key": "UserId"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "userUserId",
-                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
@@ -96,6 +85,7 @@
                     "defaultValue": {
                         "value": false
                     },
+                    "allowNull": false,
                     "field": "Admin",
                     "seqType": "Sequelize.BOOLEAN"
                 },

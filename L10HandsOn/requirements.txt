@@ -180,13 +180,18 @@ by the user's first and last name
 
 Run another migration to add a Deleted column[X]
 Render a different hbs file for the Admin profile page, which should list all users[X]
-Every Admin should see the same page. Use the route /users/admin
+Every Admin should see the same page. Use the route /users/admin[X]
+
 Step 9
 Admin users should be able to click on a user and view their information, but not edit their information
 
+TODO: make each user a link to this route vv
 Use the route /users/admin/editUser/:id
+
 Step 10
 Admin users should be able to Delete users and their posts, but not edit them
 
 Step 11
 Add some styling to your application so it is unique to your taste
+
+NOTES/QUESTIONS TO ASK - How to handle an expired token on a route?

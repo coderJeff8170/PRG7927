@@ -100,7 +100,7 @@ router.get('/profile', function (req, res, next) {
                 username: user.Username,
                 users: users
               });
-            });
+            })
           //else if regular user
           }else{
             res.render('profile', {
@@ -142,27 +142,13 @@ router.post('/:id', function(req, res, next){
         UserId: userId
     }})
     .then(
-      res.send('user successfully deleted')
-      //res.redirect(`/profile`)
+      //res.send('user successfully deleted');
+      res.redirect('/users/profile')
     )
     .catch(err => {
       res.status(400);
       res.send('Houston, we have a problem!');
     });
 })
-// router.put('/:id', function (req, res, next) {
-//   let userId = parseInt(req.params.id);
-//   models.users
-//   //don't need req.body here because you're deleting the whole thing as opposed to updating some portion of it
-//   .update( { Deleted: true }, { where: { userId : UserId } })
-//   .then(result => {
-//     res.redirect('/users/profile');
-//     //res.send('user deleted');
-//   })
-//   .catch(err => {
-//     res.status(400);
-//     res.send("You're having trouble deleting this fella!")
-//   })
-// });
 
 module.exports = router;

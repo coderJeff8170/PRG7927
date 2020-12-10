@@ -56,19 +56,63 @@ router.get('/', function (req, res, next) {
 //   });
 
 //create new post
+// router.post('/', function(req, res, next){
+  
+//     console.log(user.UserId);
+//     models.posts
+//     .create({
+//         PostTitle: req.body.title,
+//         PostBody: req.body.body,
+//       })
+//       .then(result => {
+//         res.redirect('/posts');
+//       })
+//       .catch(err => {
+//         res.status(400);
+//         res.send('Houston, we have a problem!');
+//       });
+//   });
+
+
+  //create new post
+// router.post('/', function(req, res, next){
+//   //get the token from the request
+//   let token = req.cookies.jwt;
+//   //if there is one
+//   if (token) {
+//     //verify
+//     authService.verifyUser(token)
+//     .then(user => {
+//         //console.log(user);
+//         models.posts.create({
+//         PostTitle: req.body.title,
+//         PostBody: req.body.body,
+//         UserId: user.UserId
+//       })
+//       .then(result => {
+//         res.redirect('/posts');
+//       })
+//       }
+    
+//   }));
+
 router.post('/', function(req, res, next){
-    models.posts
-    .create({
+    //get the token from the request
+  let token = req.cookies.jwt;
+  //if there is one
+  if (token) {
+    authService.verifyUser(token)
+    .then(user => {
+      models.posts.create({
         PostTitle: req.body.title,
         PostBody: req.body.body,
+        UserId: user.UserId
       })
-      .then(result => {
-        res.redirect('/posts');
-      })
-      .catch(err => {
-        res.status(400);
-        res.send('Houston, we have a problem!');
-      });
-  });
+    })
+    .then(result => {
+      res.redirect('/posts');
+    })
+  }
+});
 
 module.exports = router;
