@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const models = require('../models');
 var authService = require('../services/auth');
+const { post } = require('./users');
 
 /* GET posts page. */
 //need to be authenticated to see this:
@@ -14,12 +15,22 @@ var authService = require('../services/auth');
 router.get('/', function (req, res, next) {
   let token = req.cookies.jwt;
   if(token){
-    //TODO: find all where deleted is false - add deleted column first
-    models.posts.findAll()
+    //gives us all undeleted posts
+    models.posts.findAll({
+      where: {
+        Deleted: false
+      }
+    })
     .then(posts => {
-        res.render('posts', {
+      //now I need all users associated with the posts
+        models.users.findAll()
+        //now I need to provide a posts object to the page for iteration
+        .then(users => {
+          console.log(users[0])
+          res.render('posts', {
             posts: posts
         });
+        })
     });
   }else{
     res.send('not logged in');
