@@ -85,7 +85,10 @@ router.get('/profile', function (req, res, next) {
         //if verified
         if (user) {
           //put posts request here? get all posts where PostId: user.UserId
-          models.posts.findAll({where: { PostId: user.UserId }})
+          models.posts.findAll({where: { 
+            UserId: user.UserId,
+            Deleted: false
+           }})
           .then(posts => {
             //and if admin
           if(user.Admin){
@@ -209,7 +212,7 @@ router.post('/:id', function(req, res, next){
     });
 })
 
-// GET admin view user
+// GET admin view user - despite the route name, this does NOT edit the user.
 // again, this link is only available to an admin
 router.get('/admin/editUser/:id', function(req, res, next){
   let userId = parseInt(req.params.id);
