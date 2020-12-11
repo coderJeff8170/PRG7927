@@ -19,9 +19,29 @@
     {{#each users}}
     <li>
         {{!-- TODO: make this a link to /users/admin/editUser/:id --}}
-        <h2><a href=#"">User: {{FirstName}} {{LastName}}</a></h2>
+        <h2><a href="/users/admin/editUser/{{UserId}}">User: {{FirstName}} {{LastName}}</a></h2>
         <form method="POST" action="/users/{{UserId}}" 
             onsubmit="return confirm('Are you sure you want to delete this user?');">
+            <button type="submit" >Delete</button>
+        </form>
+    </li>
+    {{/each}}
+</ul>
+
+<hr>
+<h2>Posts I have authored</h2>
+{{!-- TODO: List of posts written by this user should be displayed here --}}
+
+<ul>
+    {{#each posts}}
+    <li>
+        <h2>Title: {{PostTitle}}</h2>
+        <p>{{PostBody}}</p>
+        <form method="PUT" action="/posts/{{PostId}}">
+            <button type="submit" >Edit</button>
+        </form>
+        <form method="DELETE" action="/posts/{{PostId}}" 
+            onsubmit="return confirm('Are you sure you want to delete this post?');">
             <button type="submit" >Delete</button>
         </form>
     </li>

@@ -162,36 +162,38 @@ Post edit button[X]
 Post edit route
 
 Post delete button[X]
-Post delete route
+Post delete route[X]
 
 
 Run a migration to add a Deleted column [X]
-After the post has been deleted, redirect the user to their profile page
+After the post has been deleted, redirect the user to their profile page[X]
 
 Step 7
 Users should be able to view their profile page. Their profile page should render the following:
 
 Their full name[X]
 Their username[X]
-The posts they have written - need to be filtered by user Id once column is working
+
+TODO: The posts they have written - need to be filtered by user Id once column is working
+
 Step 8
 Admin users should be able to see a list of all users that have not been deleted
-by the user's first and last name
+by the user's first and last name[X]
 
 Run another migration to add a Deleted column[X]
 Render a different hbs file for the Admin profile page, which should list all users[X]
 Every Admin should see the same page. Use the route /users/admin[X]
 
 Step 9
-Admin users should be able to click on a user and view their information, but not edit their information
+Admin users should be able to click on a user and view their information, but not edit their information[X]
 
 TODO: make each user a link to this route vv
-Use the route /users/admin/editUser/:id
+Use the route /users/admin/editUser/:id[X]
 
 Step 10
 Admin users should be able to Delete Users[X]
 
-Admin users should be able to Delete Posts
+Admin users should be able to Delete Posts[X]
 
 Step 11
 Add some styling to your application so it is unique to your taste

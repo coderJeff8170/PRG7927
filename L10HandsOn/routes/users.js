@@ -84,7 +84,10 @@ router.get('/profile', function (req, res, next) {
       .then(user => {
         //if verified
         if (user) {
-          //and if admin
+          //put posts request here? get all posts where PostId: user.UserId
+          models.posts.findAll({where: { PostId: user.UserId }})
+          .then(posts => {
+            //and if admin
           if(user.Admin){
             models.users.findAll({
               where: {
@@ -98,7 +101,8 @@ router.get('/profile', function (req, res, next) {
                 lastname: user.LastName,
                 email: user.Email,
                 username: user.Username,
-                users: users
+                users: users,
+                posts: posts
               });
             })
           //else if regular user
@@ -107,9 +111,11 @@ router.get('/profile', function (req, res, next) {
               firstname: user.FirstName,
               lastname: user.LastName,
               email: user.Email,
-              username: user.Username
+              username: user.Username,
+              posts: posts
             });
           }
+          })
           //if unable to verify
         } else {
           res.status(401);
@@ -123,6 +129,58 @@ router.get('/profile', function (req, res, next) {
   }
 });
 
+//JUST IN CASE
+// router.get('/profile', function (req, res, next) {
+//   //get the token from the request
+//   let token = req.cookies.jwt;
+//   //if there is one
+//   if (token) {
+//     //verify
+//     authService.verifyUser(token)
+//       .then(user => {
+//         //if verified
+//         if (user) {
+//           //put posts request here? get all posts where PostId: user.UserId
+//           //and if admin
+//           if(user.Admin){
+//             models.users.findAll({
+//               where: {
+//                 Deleted: false
+//               }
+//               //TODO: and not current user.(user.UserId?)
+//             })
+//             .then(users =>{
+//               res.render('admin', {
+//                 firstname: user.FirstName,
+//                 lastname: user.LastName,
+//                 email: user.Email,
+//                 username: user.Username,
+//                 users: users
+//               });
+//             })
+//           //else if regular user
+//           }else{
+            
+//             res.render('profile', {
+//               firstname: user.FirstName,
+//               lastname: user.LastName,
+//               email: user.Email,
+//               username: user.Username
+//             });
+//           }
+//           //if unable to verify
+//         } else {
+//           res.status(401);
+//           res.send('Invalid authentication token');
+//         }
+//       });
+//   } else {
+//     //if there's no token, they're logged out
+//     res.status(401);
+//     res.send('Must be logged in');
+//   }
+// });
+
 
 //POST logout button - logout is actually get?
 router.get('/logout', function (req, res, next) {
@@ -132,7 +190,7 @@ router.get('/logout', function (req, res, next) {
   });
   });
 
-//TODO: delete user
+//POST: delete user
 router.post('/:id', function(req, res, next){
     
   let userId = parseInt(req.params.id);
@@ -150,5 +208,25 @@ router.post('/:id', function(req, res, next){
       res.send('Houston, we have a problem!');
     });
 })
+
+// GET admin view user
+// again, this link is only available to an admin
+router.get('/admin/editUser/:id', function(req, res, next){
+  let userId = parseInt(req.params.id);
+  //ifAdmin
+  //res.send(`this button will allow the admin to see user ${userId}`);
+  models.users.findOne( {where: {
+    UserId: userId
+  }})
+  .then(user => {
+    res.render('viewuser', {
+      firstname: user.FirstName,
+      lastname: user.LastName,
+      email: user.Email,
+      username: user.Username
+    })
+  })
+  
+});
 
 module.exports = router;
