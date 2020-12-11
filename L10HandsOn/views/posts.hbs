@@ -24,9 +24,9 @@
     </div>
 </form>
 <hr>
-{{!-- test this first^^ --}}
-{{!-- TODO: provide a list of posts --}}
-<ul>
+{{!-- provide a list of posts --}}
+{{#if user.Admin}}
+    <ul>
     {{#each posts}}
     <li>
         <h2>Title: {{PostTitle}}</h2>
@@ -34,12 +34,24 @@
         <p>{{PostBody}}</p>
         {{!-- <form method="PUT" action="/posts/{{PostId}}">
             <button type="submit" >Edit</button>
-        </form>
-        <form method="DELETE" action="/posts/{{PostId}}" 
+        </form> --}}
+            <form method="POST" action="/posts/{{PostId}}" 
             onsubmit="return confirm('Are you sure you want to delete this post?');">
             <button type="submit" >Delete</button>
-        </form> --}}
+            </form>
     </li>
     {{/each}}
 </ul>
+{{else}}
+<ul>
+    {{#each posts}}
+    <li>
+        <h2>Title: {{PostTitle}}</h2>
+        <h4>Author: </h4>
+        <p>{{PostBody}}</p>
+    </li>
+    {{/each}}
+</ul>
+{{/if}}
+
 

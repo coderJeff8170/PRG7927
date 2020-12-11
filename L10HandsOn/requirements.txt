@@ -189,7 +189,9 @@ TODO: make each user a link to this route vv
 Use the route /users/admin/editUser/:id
 
 Step 10
-Admin users should be able to Delete users and their posts, but not edit them
+Admin users should be able to Delete Users[X]
+
+Admin users should be able to Delete Posts
 
 Step 11
 Add some styling to your application so it is unique to your taste
