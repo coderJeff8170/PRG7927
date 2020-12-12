@@ -22,6 +22,8 @@
 <h3 class="text-center">Users:</h3>
     <div>
         {{#each users}}
+        {{#if Admin}}
+        {{else}}
         <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h5 class="card-title"><a href="/users/admin/editUser/{{UserId}}">{{FirstName}} {{LastName}}</a></h5>
@@ -39,6 +41,7 @@
             <p class="card-text">Admin: {{Admin}}</p>
         </div> --}}
         </div>
+        {{/if}}
     {{/each}}
     </div>
     
