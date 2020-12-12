@@ -5,8 +5,7 @@ var authService = require('../services/auth');
 const { post } = require('./users');
 
 /* GET posts page. */
-//secure this route
-
+//secure route
 router.get('/', function (req, res, next) {
   let token = req.cookies.jwt;
   if(token){
@@ -16,7 +15,7 @@ router.get('/', function (req, res, next) {
       if (user) {
         models.posts.findAll({ where: { Deleted: false } })
         .then(posts => {
-            //now I need to provide a posts object to the page for iteration
+            //provide a posts object to the page for iteration
             res.render('posts', {
               posts: posts,
               user: user
@@ -26,16 +25,12 @@ router.get('/', function (req, res, next) {
         res.render('error', {
           message: "Sorry, you're not authorized to see that page!"
         });
-        //res.status(401);
-        //res.send('Invalid authentication token');
       }
     })
     .catch(err => {
       res.render('error', {
         message: "Sorry, something went wrong!"
       });
-      //res.status(400);
-      //res.send('Houston, we have a problem!');
     });
   }else{
     rres.render('error', {
@@ -65,8 +60,7 @@ router.post('/', function(req, res, next){
   }
 });
 
-//TODO: Edit route. tch. need info about post to be edited to be passed to this view.
-//TEST THIS
+//Edit post button
 router.get('/editpost/:id', function(req, res, next){
   let postId = parseInt(req.params.id);
   //get post where id matches
@@ -80,9 +74,8 @@ router.get('/editpost/:id', function(req, res, next){
   })
 })
 
-//TODO: Edit post - need an update page, then this handles the body of that
+//Edit post - this handles the body of update page itself
 router.post('/updatepost/:id', function(req, res, next){
-  //res.send(`this button is going to delete post id${req.params.id}`);
   let postId = parseInt(req.params.id);
   models.posts.update({ 
     PostTitle: req.body.title,
@@ -97,8 +90,6 @@ router.post('/updatepost/:id', function(req, res, next){
     res.render('error', {
       message: "Houston, we have a problem!"
     });
-    //res.status(400);
-    //res.send('Houston, we have a problem!');
   });
 });
 
@@ -118,8 +109,6 @@ router.get('/deletepost/:id', function(req, res, next){
     res.render('error', {
       message: "Houston, we have a problem!"
     });
-    //res.status(400);
-    //res.send('Houston, we have a problem!');
   });
 });
 

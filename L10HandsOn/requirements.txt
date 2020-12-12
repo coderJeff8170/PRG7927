@@ -196,6 +196,5 @@ Admin users should be able to Delete Users[X]
 Admin users should be able to Delete Posts[X]
 
 Step 11
-Add some styling to your application so it is unique to your taste
+Add some styling to your application so it is unique to your taste[X]
 
-NOTES/QUESTIONS TO ASK - How to handle an expired token on a route?

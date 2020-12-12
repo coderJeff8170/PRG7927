@@ -88,7 +88,7 @@ router.get('/profile', function (req, res, next) {
       .then(user => {
         //if verified
         if (user) {
-          //put posts request here? get all posts where PostId: user.UserId
+          //get all posts where postsUserId: user.UserId
           models.posts.findAll({where: { 
             UserId: user.UserId,
             Deleted: false
@@ -100,7 +100,6 @@ router.get('/profile', function (req, res, next) {
               where: {
                 Deleted: false
               }
-              //TODO: and not current user.(user.UserId?)
             })
             .then(users =>{
               res.render('admin', {
@@ -128,17 +127,12 @@ router.get('/profile', function (req, res, next) {
           res.render('error', {
             message: "Sorry, I don't recognize you!"
           });
-          //res.status(401);
-          //res.send('Invalid authentication token');
         }
       });
   } else {
     res.render('login', {
       message: "Sorry, you must be logged in to see this page!"
     });
-    //if there's no token, they're logged out
-    //res.status(401);
-    //res.send('Must be logged in');
   }
 });
 
