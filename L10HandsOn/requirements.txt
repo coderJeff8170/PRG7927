@@ -156,7 +156,7 @@ Get it rendering first.[X]
 All posts should show up on a posts page [X]
 TODO: Maybe have three tabs - All, Others, Mine?
 
-Be able to click on a post to update or delete it
+Be able to click on a post to update or delete it[X]
 
 Post edit button[X]
 Post edit route

@@ -23,16 +23,24 @@ router.get('/', function (req, res, next) {
             });
         });
       } else {
-        res.status(401);
-        res.send('Invalid authentication token');
+        res.render('error', {
+          message: "Sorry, you're not authorized to see that page!"
+        });
+        //res.status(401);
+        //res.send('Invalid authentication token');
       }
     })
     .catch(err => {
-      res.status(400);
-      res.send('Houston, we have a problem!');
+      res.render('error', {
+        message: "Sorry, something went wrong!"
+      });
+      //res.status(400);
+      //res.send('Houston, we have a problem!');
     });
   }else{
-    res.send('not logged in');
+    rres.render('error', {
+      message: "Sorry, you're not logged in!"
+    });
   }
   });
 
@@ -83,11 +91,14 @@ router.post('/updatepost/:id', function(req, res, next){
     PostId: postId
   }})
   .then(
-    res.redirect('/posts')
+    res.redirect(`/users/profile`)
   )
   .catch(err => {
-    res.status(400);
-    res.send('Houston, we have a problem!');
+    res.render('error', {
+      message: "Houston, we have a problem!"
+    });
+    //res.status(400);
+    //res.send('Houston, we have a problem!');
   });
 });
 
@@ -104,8 +115,11 @@ router.get('/deletepost/:id', function(req, res, next){
     res.redirect(`/posts`)
   )
   .catch(err => {
-    res.status(400);
-    res.send('Houston, we have a problem!');
+    res.render('error', {
+      message: "Houston, we have a problem!"
+    });
+    //res.status(400);
+    //res.send('Houston, we have a problem!');
   });
 });
 

@@ -5,7 +5,9 @@ var authService = require('../services/auth');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.render('error', {
+    message: "Sorry, this page is unavailable!"
+  });
 });
 
 //GET signup page
@@ -35,7 +37,9 @@ router.post('/signup', function(req, res, next){
         message: "User Successfully created! please login!"
       });
     }else{
-      res.send('this user already exists');
+      res.render('error', {
+        message: "Sorry, this user already exists!"
+      });
     }
   });
 });
@@ -55,9 +59,8 @@ router.post('/login', function (req, res, next) {
     }
   }).then(user => {
     if (!user) {
-      console.log('User not found')
-      return res.status(401).json({
-        message: "Login Failed"
+      res.render('error', {
+        message: "Sorry, login failed!"
       });
     } else {
       let passwordMatch = authService.comparePasswords(req.body.password, user.Password);
@@ -66,8 +69,9 @@ router.post('/login', function (req, res, next) {
         res.cookie('jwt', token);
         res.redirect('/users/profile');
       } else {
-        console.log('Wrong password');
-        res.send('Wrong password');
+        res.render('error', {
+          message: "Sorry, login failed!"
+        });
       }
     }
   });
@@ -121,75 +125,28 @@ router.get('/profile', function (req, res, next) {
           })
           //if unable to verify
         } else {
-          res.status(401);
-          res.send('Invalid authentication token');
+          res.render('error', {
+            message: "Sorry, I don't recognize you!"
+          });
+          //res.status(401);
+          //res.send('Invalid authentication token');
         }
       });
   } else {
+    res.render('login', {
+      message: "Sorry, you must be logged in to see this page!"
+    });
     //if there's no token, they're logged out
-    res.status(401);
-    res.send('Must be logged in');
+    //res.status(401);
+    //res.send('Must be logged in');
   }
 });
-
-//JUST IN CASE
-// router.get('/profile', function (req, res, next) {
-//   //get the token from the request
-//   let token = req.cookies.jwt;
-//   //if there is one
-//   if (token) {
-//     //verify
-//     authService.verifyUser(token)
-//       .then(user => {
-//         //if verified
-//         if (user) {
-//           //put posts request here? get all posts where PostId: user.UserId
-//           //and if admin
-//           if(user.Admin){
-//             models.users.findAll({
-//               where: {
-//                 Deleted: false
-//               }
-//               //TODO: and not current user.(user.UserId?)
-//             })
-//             .then(users =>{
-//               res.render('admin', {
-//                 firstname: user.FirstName,
-//                 lastname: user.LastName,
-//                 email: user.Email,
-//                 username: user.Username,
-//                 users: users
-//               });
-//             })
-//           //else if regular user
-//           }else{
-            
-//             res.render('profile', {
-//               firstname: user.FirstName,
-//               lastname: user.LastName,
-//               email: user.Email,
-//               username: user.Username
-//             });
-//           }
-//           //if unable to verify
-//         } else {
-//           res.status(401);
-//           res.send('Invalid authentication token');
-//         }
-//       });
-//   } else {
-//     //if there's no token, they're logged out
-//     res.status(401);
-//     res.send('Must be logged in');
-//   }
-// });
-
 
 //POST logout button - logout is actually get?
 router.get('/logout', function (req, res, next) {
   res.cookie('jwt', "", { expires: new Date(0) });
   res.render('login', {
-    message: "Log Back In:"
+    message: "Log Back In?"
   });
   });
 
@@ -207,8 +164,11 @@ router.post('/:id', function(req, res, next){
       res.redirect('/users/profile')
     )
     .catch(err => {
-      res.status(400);
-      res.send('Houston, we have a problem!');
+      res.render('error', {
+        message: "Sorry, couldn't delete user!"
+      });
+      //res.status(400);
+      //res.send('Houston, we have a problem!');
     });
 })
 
@@ -229,7 +189,6 @@ router.get('/admin/editUser/:id', function(req, res, next){
       username: user.Username
     })
   })
-  
 });
 
 module.exports = router;
