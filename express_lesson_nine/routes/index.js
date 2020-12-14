@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const staticModels = require('../staticModels/planets');
+const starTrekModels = require('../staticModels/starTrekPlanets');
+
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -14,7 +16,7 @@ router.get('/staticPlanets', function(req, res, next) {
 
 /* GET star trek planets */
 router.get('/starTrekPlanets', function (req, res, next) {
-  
+  res.send(JSON.stringify(starTrekModels.planet));
 });
 
 module.exports = router;
