@@ -8,8 +8,12 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/signup', function (req, res, next) {
+  res.render('signup');
+});
+
 // Create new user if one doesn't exist
-router.post('/signup', function(req, res, next) {
+router.post('/signup', function (req, res, next) {
   models.users
     .findOrCreate({
       where: {
@@ -19,10 +23,10 @@ router.post('/signup', function(req, res, next) {
         FirstName: req.body.firstName,
         LastName: req.body.lastName,
         Email: req.body.email,
-        Password: req.body.password
+        Password: authService.hashPassword(req.body.password) //<--- Change to this code here
       }
     })
-    .spread(function(result, created) {
+    .spread(function (result, created) {
       if (created) {
         res.send('User successfully created');
       } else {
@@ -35,8 +39,7 @@ router.post('/signup', function(req, res, next) {
 router.post('/login', function (req, res, next) {
   models.users.findOne({
     where: {
-      Username: req.body.username,
-      Password: req.body.password
+      Username: req.body.username
     }
   }).then(user => {
     if (!user) {
@@ -44,14 +47,16 @@ router.post('/login', function (req, res, next) {
       return res.status(401).json({
         message: "Login Failed"
       });
-    }
-    if (user) {
-      let token = authService.signUser(user); // <--- Uses the authService to create jwt token
-      res.cookie('jwt', token); // <--- Adds token to response as a cookie
-      res.send('Login successful');
     } else {
-      console.log('Wrong password');
-      res.redirect('login')
+      let passwordMatch = authService.comparePasswords(req.body.password, user.Password);
+      if (passwordMatch) {
+        let token = authService.signUser(user);
+        res.cookie('jwt', token);
+        res.send('Login successful');
+      } else {
+        console.log('Wrong password');
+        res.send('Wrong password');
+      }
     }
   });
 });
