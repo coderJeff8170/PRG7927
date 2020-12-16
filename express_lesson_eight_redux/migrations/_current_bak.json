@@ -39,18 +39,10 @@
                 "updatedAt": {
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                },
-                "Admin": {
-                    "defaultValue": {
-                        "value": false
-                    },
-                    "allowNull": false,
-                    "field": "Admin",
-                    "seqType": "Sequelize.BOOLEAN"
                 }
             },
             "indexes": []
         }
     },
-    "revision": 2
+    "revision": 1
 }

@@ -21,7 +21,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       Password: DataTypes.STRING,
       createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
+      updatedAt: DataTypes.DATE,
+      Admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
+      }
     },
     {}
   );

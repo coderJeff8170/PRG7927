@@ -1,0 +1,24 @@
+Step 1
+Run a migration to add a new column "Admin" into the users table[X]
+The data type should be a boolean [X]
+Change the migration folder to include a default value of false
+Don't forget to change the model to match
+^^ these seem a bit convoluted but nevermind. It's done! [X]
+
+Step 2
+Within MySQL Workbench, give at least one of your users a value of 
+true for the Admin column[X]
+
+Step 3
+Write the code so when a user log in using JWT, their Admin status
+is added to the token[X]
+
+Look at the signUser function
+
+Step 4
+Add another get route called /:id that returns the information about
+the user in the database with that Id.[X]
+
+Step 5
+Use the token to check if the user who logs in is an Admin. If they are
+an admin then allow them access the newly created /:id route.[X]

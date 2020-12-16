@@ -35,6 +35,10 @@ router.post('/signup', function (req, res, next) {
     });
 });
 
+//login get route for testing
+router.get('/login', function(req, res, next){
+  res.render('login');
+})
 // Login user and return JWT as cookie
 router.post('/login', function (req, res, next) {
   models.users.findOne({
@@ -79,10 +83,49 @@ router.get('/profile', function (req, res, next) {
   }
 });
 
+//needs to be before parameterized route - order matters
 router.get('/logout', function (req, res, next) {
   res.cookie('jwt', "", { expires: new Date(0) });
   res.send('Logged out');
   });
+
+//get route to return information dynamically about a user
+router.get('/:id', function(req, res, next){
+  let userId = parseInt(req.params.id);
+  let token = req.cookies.jwt;
+  if(token) {
+    authService.verifyUser(token)
+    .then(user => {
+      if (user) {
+        if(user.Admin){
+          models.users.findOne({
+            where: {
+              UserId: userId
+            }
+          })
+          .then(foundUser => {
+            if(foundUser){
+              res.send(JSON.stringify(foundUser));
+            }else{
+              res.send(`cannot find user ${userId}`);
+            }
+          })
+        }else{
+          res.send(`youre not an admin! You're not allowed so see user ${userId}`);
+        }
+        
+      } else {
+        res.status(401);
+        res.send('Invalid authentication token');
+      }
+    })
+  } else {
+    res.status(401);
+    res.send('you not logged in, bro');
+  }
+})
+
+
 
 
 module.exports = router;
