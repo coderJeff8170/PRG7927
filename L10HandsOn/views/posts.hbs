@@ -17,9 +17,7 @@
     </div>
 </form>
 </div>
-
 <hr>
-
 {{!-- provide a list of posts --}}
 {{#if user.Admin}}
     {{#each posts}}
@@ -40,18 +38,6 @@
         </div>
         </div>
     {{/each}}
-    {{!-- <ul>
-    {{#each posts}}
-    <li>
-        <h2>Title: {{PostTitle}}</h2>
-        <p>{{PostBody}}</p>
-            <form method="GET" action="/posts/deletepost/{{PostId}}" 
-            onsubmit="return confirm('Are you sure you want to delete this post?');">
-            <button type="submit" class="btn btn-primary">Delete</button>
-            </form>
-    </li>
-    {{/each}}
-</ul> --}}
 {{else}}
     {{#each posts}}
         <div class="card">

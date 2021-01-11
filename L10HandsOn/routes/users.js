@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const models = require('../models');
 var authService = require('../services/auth');
+const { Op } = require('sequelize');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -20,7 +21,7 @@ router.post('/signup', function(req, res, next){
   models.users
   .findOrCreate({
     where: {
-      Email: req.body.email
+      [Op.or]: [ { Email: req.body.email }, { Username: req.body.username }]
     },
     defaults: {
       FirstName: req.body.firstname,

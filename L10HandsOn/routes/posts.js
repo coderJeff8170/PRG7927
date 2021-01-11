@@ -13,8 +13,7 @@ router.get('/', function (req, res, next) {
     .then(user => {
       //if verified
       if (user) {
-        //models.posts.findAll({ where: { Deleted: false } } )
-        
+        //include is sequelize for joining tables users and posts - object now has all columns
         models.posts.findAll({ 
           where: { Deleted: false },
           include: models.users
@@ -22,12 +21,6 @@ router.get('/', function (req, res, next) {
         
         .then(posts => {
           console.log(JSON.stringify(posts))
-          
-            //how might we associate a post with an author return user where (posts.UserId === users.UserId)
-            //first get the users where (posts.UserId === users.UserId)
-            //then provide found users to the render call.
-            
-            
             //provide a posts object to the page for iteration
             res.render('posts', {
               posts: posts,
@@ -46,7 +39,7 @@ router.get('/', function (req, res, next) {
       });
     });
   }else{
-    rres.render('error', {
+    res.render('error', {
       message: "Sorry, you're not logged in!"
     });
   }
