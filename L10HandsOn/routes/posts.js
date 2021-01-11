@@ -13,8 +13,21 @@ router.get('/', function (req, res, next) {
     .then(user => {
       //if verified
       if (user) {
-        models.posts.findAll({ where: { Deleted: false } })
+        //models.posts.findAll({ where: { Deleted: false } } )
+        
+        models.posts.findAll({ 
+          where: { Deleted: false },
+          include: models.users
+        })
+        
         .then(posts => {
+          console.log(JSON.stringify(posts))
+          
+            //how might we associate a post with an author return user where (posts.UserId === users.UserId)
+            //first get the users where (posts.UserId === users.UserId)
+            //then provide found users to the render call.
+            
+            
             //provide a posts object to the page for iteration
             res.render('posts', {
               posts: posts,
@@ -38,6 +51,39 @@ router.get('/', function (req, res, next) {
     });
   }
   });
+
+  // router.get('/', function (req, res, next) {
+  //   let token = req.cookies.jwt;
+  //   if(token){
+  //     authService.verifyUser(token)
+  //     .then(user => {
+  //       //if verified
+  //       if (user) {
+  //         models.posts.findAll({ where: { Deleted: false } })
+  //         .then(posts => {
+  //             //provide a posts object to the page for iteration
+  //             res.render('posts', {
+  //               posts: posts,
+  //               user: user
+  //             });
+  //         });
+  //       } else {
+  //         res.render('error', {
+  //           message: "Sorry, you're not authorized to see that page!"
+  //         });
+  //       }
+  //     })
+  //     .catch(err => {
+  //       res.render('error', {
+  //         message: "Sorry, something went wrong!"
+  //       });
+  //     });
+  //   }else{
+  //     rres.render('error', {
+  //       message: "Sorry, you're not logged in!"
+  //     });
+  //   }
+  //   });
 
 
 //Create new post
